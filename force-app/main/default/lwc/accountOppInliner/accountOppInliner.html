@@ -1,0 +1,20 @@
+<template>
+	 <template if:true={opportunities}>
+	    <template for:each={opportunities} for:item="opp">
+	        <lightning-card key={opp.Id} class="slds-var-m-bottom_medium" icon-name="standard:opportunitiy">
+	            <div class="slds-var-p-horizontal_small">
+	                <!-- This component handles its own view/edit states instantly -->
+	                <lightning-record-form
+	                    record-id={opp.Id}
+	                    object-api-name="Opportunity"
+	                    fields={fieldsArray}
+	                    mode="view"> 
+	                </lightning-record-form>
+	            </div>
+	        </lightning-card>
+	    </template>
+	</template>
+    <template if:false={opportunities}>
+        <p class="slds-text-color_weak">No related opportunities found.</p>
+    </template>
+</template>
