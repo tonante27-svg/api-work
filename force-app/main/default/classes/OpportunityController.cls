@@ -13,15 +13,13 @@ public with sharing class OpportunityController {
     public static List<Opportunity> getOpportunities(Id accountId) {
          List<Opportunity> opportunities = new List<Opportunity>();
         try{
-            if (!Schema.sObjectType.Opportunity.isAccessible()) {
-                throw new System.NoAccessException();
-            }else{
-                opportunities = [SELECT Id, Name, StageName, IqScore, Amount FROM Opportunity WHERE AccountId = :accountId WITH SECURITY_ENFORCED];
-            }
-        }catch(System.NoAccessException e){
-            throw new AuraHandledException('You do not have access to view opportunities.');
+           
+            opportunities = [SELECT Id, Name, StageName,Amount FROM Opportunity WHERE AccountId = :accountId WITH USER_MODE];
         }catch(Exception e){
-            throw new AuraHandledException('An error occurred while retrieving opportunities: ' + e.getMessage());
+            AuraHandledException ex = new AuraHandledException('You do not have access to view opportunities.');
+            System.debug('Error: ' + e.getMessage());
+            ex.setMessage('An unexpected error occurred while retrieving opportunities: ' + e.getMessage());
+            throw ex;
         }
         return opportunities;
     }

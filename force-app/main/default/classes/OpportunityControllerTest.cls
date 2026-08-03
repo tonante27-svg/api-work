@@ -19,48 +19,77 @@
  *
  * See the Apex Language Reference for more information about Testing and Code Coverage.
  */
-@isTest
+@IsTest
 private class OpportunityControllerTest {
 
     @TestSetup
     static void setupTestData() {
-        Profile prof = [SELECT Id from Profile  WHERE Name = 'Chatter User'];
-User fakeUser = new User(
-        FirstName='Senior',
-        Lastname= 'Wooba',
-        ProfileId=chatterP.Id,
-        Username='swooba@charlaten.com',
-        Title = 'Grand Poobah',
-        Email='swooba@litterbox.com',
-        LocaleSidKey = 'en_US',
-        TimeZoneSidKey='America/New_York',
-        EmailEncodingKey='UTF-8',
-        LanguageLocaleKey='en_US',
-        Alias='senwoo5');
-        insert fakeUser;
+        // Create setup data in running user context
+        User runningUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];   
+        System.runAs(runningUser){
+            // 1. Fixed variable name from chatterP to prof
+            Profile prof = [SELECT Id FROM Profile WHERE Name = 'Chatter Free User'];
 
-        // Creat eand Acocunt Record
-        Account testAccount = new Account(Name='Test Account', Industry='Technology');
+            User fakeUser = new User(
+                FirstName = 'Senior',
+                LastName = 'Wooba',
+                ProfileId = prof.Id, 
+                Username = 'swooba@charlaten.com.test', // Added .test suffix to guarantee unique username
+                Title = 'Grand Poobah',
+                Email = 'swooba@litterbox.com',
+                LocaleSidKey = 'en_US',
+                TimeZoneSidKey = 'America/New_York',
+                EmailEncodingKey = 'UTF-8',
+                LanguageLocaleKey = 'en_US',
+                Alias = 'senwoo5'
+            );
+            insert fakeUser;
+        }
+
+        // Create Account Record
+        Account testAccount = new Account(Name = 'Test Account', Industry = 'Technology');
         insert testAccount;
 
         Opportunity testOpp = new Opportunity( 
-        			AccountId = testAccount.Id,
-        			Name = 'Test Opp for Test Account'
-        			);
+            AccountId = testAccount.Id,
+            Name = 'Test Opp for Test Account',
+            StageName = 'Prospecting',
+            CloseDate = Date.today().addDays(30)
+        );
         insert testOpp;
     }
 
-    @isTest
-    static void myUnitTest() {
-        // TO DO: implement unit test
-        List<Opportunity> opps  = new List<Opportunity>();
-        User u = [SELECT Id FROM User WHERE Alias='senwoo5' LIMIT 1];
-        Account testAccount = [SELECT Id FROM Account WHERE Name='Test Account' LIMIT 1];
-         System.runAs(u) {
+    @IsTest
+    private static void testFailOnUser() {
+        User chatterUser = [SELECT Id FROM User WHERE Alias = 'senwoo5' LIMIT 1];
+        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test Account' LIMIT 1];
+        List<Opportunity> opps;
+        Boolean caughtException = false;
+        System.runAs(chatterUser) { 
             Test.startTest();
-            // Perform test logic or call methods here
-            oppsOpportunityController.getOpportunities(testAccount.Id);
+            try{
+                opps = OpportunityController.getOpportunities(testAccount.Id);
+            } catch (AuraHandledException e) {
+                caughtException = true;
+                System.assert(e.getMessage() != null || e.getMessage().contains('Opportunity'), 'Expected an AuraHandledException with Opportunity in the message');
+            }
             Test.stopTest();
+            System.assert(caughtException, 'Expected and AuraHandler exception to be thrown for user without access');
         }
+
+        // Apex SOQL/methods usually return empty lists, not null
+        System.assertEquals(null, opps, 'Should return null for restricted user ');
+    }
+
+    @IsTest
+    private static void testSuccessUser() {
+        Account testAccount = [SELECT Id FROM Account WHERE Name = 'Test Account' LIMIT 1];
+        List<Opportunity> opps;
+       
+        Test.startTest();
+        opps = OpportunityController.getOpportunities(testAccount.Id);
+        Test.stopTest();
+
+        System.assertEquals(1, opps.size(), 'Should return 1 opportunity');
     }
 }
