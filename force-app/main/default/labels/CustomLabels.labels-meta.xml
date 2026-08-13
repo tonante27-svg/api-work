@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Rest_Countries_Endpoint</fullName>
+        <categories>URLs</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Rest_Countries_Endpoint</shortDescription>
+        <value>https://restcountries.com/v3.1/name/</value>
+    </labels>
+</CustomLabels>

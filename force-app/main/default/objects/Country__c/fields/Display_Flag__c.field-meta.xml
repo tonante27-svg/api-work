@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Display_Flag__c</fullName>
+    <description>Display Country Flag</description>
+    <externalId>false</externalId>
+    <formula>IMAGE(Flag__c, &quot;Flag&quot;, 50, 80)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Displays a nation&apos;s flag</inlineHelpText>
+    <label>Display Flag</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
