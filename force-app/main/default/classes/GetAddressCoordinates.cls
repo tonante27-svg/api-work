@@ -16,7 +16,7 @@ public with sharing class GetAddressCoordinates {
      * @return The raw JSON response body from the geocoding API.
      * @throws AuraHandledException when the callout fails or returns a non-200 status.
      */
-    public static String getGeocodeApiUrl(String address) {
+    public static String getGeocodeInfo(String address) {
         // Replace spaces with '+' for URL formatting
         String formattedAddress = address != null 
             ? EncodingUtil.urlEncode(address, 'UTF-8') 
