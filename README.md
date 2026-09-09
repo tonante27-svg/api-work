@@ -1,4 +1,4 @@
-# Salesforce API & Integration Patterns
+# Salesforce API & Integration Patterns (LWC-Learning)
 
 A comprehensive collection of Salesforce API, integration, and application-development patterns implemented with Apex, Lightning Web Components (LWC), and Salesforce platform APIs.
 
