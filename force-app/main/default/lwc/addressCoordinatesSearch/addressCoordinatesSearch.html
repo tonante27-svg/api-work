@@ -1,0 +1,61 @@
+<template>
+  <lightning-card
+    title="Address GeoCode Selector"
+    icon-name="custom:custom35"
+    variant="base"
+  >
+    <div class="slds-var-p-around_medium">
+      <lightning-layout multiple-rows="true">
+        <lightning-layout-item size="12">
+          <lightning-input
+            label="Street"
+            name="street"
+            value={street}
+            onchange={handleIput}
+          ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="12">
+          <lightning-input
+            label="City"
+            name="city"
+            value={city}
+            onchange={handleIput}
+          ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="6">
+          <lightning-input
+            label="State"
+            name="state"
+            value={state}
+            onchange={handleIput}
+          ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="6">
+          <lightning-input
+            label="Postcode"
+            name="postcode"
+            value={postcode}
+            onchange={handleIput}
+          >
+          </lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="6">
+          <lightning-input
+            label="Country"
+            name="country"
+            value={country}
+            onchange={handleIput}
+          >
+          </lightning-input>
+        </lightning-layout-item>
+      </lightning-layout>
+    </div>
+    <div class="slds-var-p-around_medium">
+      <lightning-button
+        variant="brand"
+        label="Find Coordinates"
+        onclick={handleClick}
+      ></lightning-button>
+    </div>
+  </lightning-card>
+</template>
