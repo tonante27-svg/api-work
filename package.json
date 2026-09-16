@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Salesforce App",
   "scripts": {
-    "lint": "eslint **/{aura,lwc}/**/*.js",
+    "lint": "eslint \"force-app/main/default/{aura,lwc}/**/*.js\"",
     "test": "npm run test:unit",
     "test:unit": "sfdx-lwc-jest",
     "test:unit:watch": "sfdx-lwc-jest --watch",
@@ -31,7 +31,8 @@
     "lint-staged": "^15.1.0",
     "prettier": "^3.1.0",
     "prettier-plugin-apex": "^2.0.1",
-    "rollup": "^4.63.2"
+    "rollup": "^4.63.2",
+    "typescript": "^5.4.5"
   },
   "lint-staged": {
     "**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}": [
