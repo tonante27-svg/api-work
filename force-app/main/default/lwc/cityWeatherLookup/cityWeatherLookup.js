@@ -1,9 +1,9 @@
-import { LightningElement,api,track} from 'lwc';
+import { LightningElement,track} from 'lwc';
 import getWeatherUpdate from "@salesforce/apex/WeatherService.getWeather";
 import ToastMsg from 'lightning/toast';
 export default class CityWeatherLookup extends LightningElement {
 
-    @api cityName;
+    cityName;
     errorMessage;
     @track weatherData;
     @track islLoading = false;
