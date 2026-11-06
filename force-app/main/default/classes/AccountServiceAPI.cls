@@ -111,25 +111,27 @@ global class CreateAccountResponseWrapper{
         }
 
         @HttpDelete /* 001ak0000480YKnAAM */
-        global static void deleteAccountSummary(){
+        global static String deleteAccountSummary(){
              RestRequest req = RestContext.request;  
              try{
                 //get endpoint
                 String acctId = req.requestURI.substring(req.requestURI.lastIndexOf('/')+1);
                 if(String.isBlank(acctId)){
                 	RestContext.response.statusCode = 403;
-                	return;
+                	return 'Account ID is required.';
                 }
                 if (!Schema.sObjectType.Account.isDeletable()) {
                     system.debug('You do not have permission to delete accounts.');
                     RestContext.response.statusCode = 403;
-                    return;
+                    return 'You do not have permission to delete accounts.';
                 }
                 Account deleteAccount = new Account(Id=acctId);
                 delete deleteAccount;
                  system.debug('Account '+acctId+' was deleted successfully');
+                 return 'Account '+acctId+' was deleted successfully';
              }catch(Exception e){
                 RestContext.response.statusCode = 500;
+                return 'Error while processing the request. please contact your admin: ' + e.getMessage();
              }
         }
 }

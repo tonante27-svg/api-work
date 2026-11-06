@@ -58,7 +58,7 @@ public with sharing class WeatherService {
      */
     public static WeatherWrapper fetchWeatherInfo(String cityName){
 
-        //Get the access for this site:
+        //Get the access for this site using Custom Setting which holds the key:
         Weather_Config__c config = Weather_Config__c.getInstance();
         if(config == null || String.isBlank(config.API_Key__c)){
             throw new AuraHandledException ('Weather API Configuration is missing.');
