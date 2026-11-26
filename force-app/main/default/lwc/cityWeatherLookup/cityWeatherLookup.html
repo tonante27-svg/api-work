@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title="City Weather Lookup" icon-name="utility:world" variant="base">
+      <div class="slds-var-m-around_medium">
+          <lightning-input label="City Name" type="text" onchange={handleCity}></lightning-input>
+          <br/><lightning-button 
+            variant="brand"
+            type="submit"
+            label="Get Weather" 
+            onclick={handleSearch} 
+          ></lightning-button>
+      </div>
+      <template lwc:if={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+      </template>
+      <template lwc:if={errorMessage}>
+        <div class="slds-text-color_error slds-var-m-top_medium">
+          {errorMessage}
+        </div>
+      </template>
+     <template lwc:if={weatherData}>
+        <div class="slds-var-m-top_medium slds-box">
+           <p><strong>City:</strong>{weatherData.cityName}</p>
+           <p><strong>Temperature:</strong>{weatherData.temperature}</p>
+           <p><strong>Condition:</strong>{weatherData.condition}</p>
+           <p><strong>Humidity:</strong>{weatherData.humidity}</p>
+        </div>
+    </template>
+    </lightning-card>
+</template>
