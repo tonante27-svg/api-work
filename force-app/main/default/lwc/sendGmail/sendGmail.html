@@ -1,0 +1,55 @@
+<template>
+    <lightning-card title="Send Email" icon-name="utility:email">
+        <div class="slds-var-m-around_medium slds-is-relative">
+            <!-- Loading Spinner -->
+            <template if:true={isSending}>
+                <lightning-spinner alternative-text="Sending email..." size="medium"></lightning-spinner>
+            </template>
+            <!-- Form Fields -->
+            <div class="slds-modal__content slds-var-m-around_medium">
+                <lightning-input 
+                    type="text" 
+                    label="To" 
+                    value={toAddress} 
+                    data-field="to" 
+                    onchange={handleChange} 
+                    disabled={isSending}>
+                </lightning-input>
+
+                <lightning-input 
+                    type="text" 
+                    label="Subject" 
+                    value={subject} 
+                    data-field="subject" 
+                    onchange={handleChange} 
+                    disabled={isSending}>
+                </lightning-input>
+
+                <lightning-textarea 
+                    label="Message" 
+                    value={message} 
+                    data-field="message" 
+                    onchange={handleChange} 
+                    disabled={isSending}>
+                </lightning-textarea>
+            </div>
+
+            <!-- Footer Buttons -->
+            <div class="slds-align_absolute-center slds-m-top_medium">
+                <lightning-button 
+                    label="Cancel" 
+                    onclick={handleCancel} 
+                    disabled={isSending} 
+                    class="slds-m-right_x-small">
+                </lightning-button>
+                <lightning-button 
+                    variant="brand" 
+                    label="Send Email" 
+                    onclick={handleSendEmail} 
+                    disabled={isSending}>
+                </lightning-button>
+            </div>
+
+        </div>
+    </lightning-card>
+</template>

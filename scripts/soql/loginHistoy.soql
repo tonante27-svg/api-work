@@ -1,0 +1,1 @@
+SELECT Application FROM LoginHistory WHERE LoginSubType IN ('OAuth User-Agent', 'OAuth User-Agent for Hybrid Apps', 'OAuth User-Agent with ID Token')
