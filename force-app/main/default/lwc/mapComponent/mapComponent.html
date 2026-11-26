@@ -1,0 +1,9 @@
+<template>
+  <lightning-card title="Map" icon-name="utility:location" variant="base">
+    <div class="mapComponent" lwc:dom="manual" lwc:ref="map"></div>
+    <div>
+      <c-address-coordinates-search oncoordinates={handleCoordinates}>
+      </c-address-coordinates-search>
+    </div>
+  </lightning-card>
+</template>
